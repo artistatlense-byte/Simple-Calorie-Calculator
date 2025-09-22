@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calorie Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f4f4f4;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    select, button {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      font-size: 16px;
+    }
+    .totals, .food-log {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e9f5e9;
+      border-radius: 6px;
+    }
+    .totals p, .food-log li {
+      font-size: 16px;
+    }
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calorie Calculator</h1>
+
+    <label for="foodSelect">Select Food:</label>
+    <select id="foodSelect">
+      <option value="" disabled selected>-- Choose a food item --</option>
+    </select>
+
+    <button onclick="addFood()">Add Food</button>
+
+    <div class="totals">
+      <h3>Nutrition Totals:</h3>
+      <p>Calories: <span id="totalCalories">0</span> kcal</p>
+      <p>Protein: <span id="totalProtein">0</span> g</p>
+      <p>Vitamins: <span id="totalVitamins">0</span>% DV</p>
+    </div>
+
+    <div class="food-log">
+      <h3>Food Log:</h3>
+      <ul id="foodList"></ul>
+    </div>
+  </div>
+
+  <script>
+    // Food database
+    const foodData = {
+      "Banana": { calories: 105, protein: 1.3, vitamins: 10 },
+      "Egg (boiled)": { calories: 78, protein: 6.3, vitamins: 12 },
+      "Grilled Chicken Breast": { calories: 165, protein: 31, vitamins: 15 },
+      "Broccoli (1 cup)": { calories: 55, protein: 3.7, vitamins: 90 },
+      "Apple": { calories: 95, protein: 0.5, vitamins: 8 },
+      "Milk (1 cup)": { calories: 122, protein: 8, vitamins: 25 },
+      "White Rice (1 cup)": { calories: 200, protein: 4.3, vitamins: 2 },
+      "Almonds (1 oz)": { calories: 164, protein: 6, vitamins: 6 },
+      "Salmon (100g)": { calories: 206, protein: 22, vitamins: 50 },
+      "Oatmeal (1 cup)": { calories: 158, protein: 5.5, vitamins: 15 }
+    };
+
+    // Populate dropdown
+    const foodSelect = document.getElementById("foodSelect");
+    for (const food in foodData) {
+      const option = document.createElement("option");
+      option.value = food;
+      option.textContent = food;
+      foodSelect.appendChild(option);
+    }
+
+    // Totals
+    let totalCalories = 0;
+    let totalProtein = 0;
+    let totalVitamins = 0;
+
+    function addFood() {
+      const selectedFood = foodSelect.value;
+      if (!selectedFood) {
+        alert("Please select a food item.");
+        return;
+      }
+
+      const foodInfo = foodData[selectedFood];
+      totalCalories += foodInfo.calories;
+      totalProtein += foodInfo.protein;
+      totalVitamins += foodInfo.vitamins;
+
+      document.getElementById("totalCalories").textContent = totalCalories.toFixed(1);
+      document.getElementById("totalProtein").textContent = totalProtein.toFixed(1);
+      document.getElementById("totalVitamins").textContent = totalVitamins.toFixed(1);
+
+      const foodList = document.getElementById("foodList");
+      const li = document.createElement("li");
+      li.textContent = `${selectedFood}: ${foodInfo.calories} cal, ${foodInfo.protein}g protein, ${foodInfo.vitamins}% vitamins`;
+      foodList.appendChild(li);
+    }
+  </script>
+</body>
+</html>
