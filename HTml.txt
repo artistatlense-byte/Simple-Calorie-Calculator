@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calorie Count Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .result {
+      margin-top: 20px;
+      background: #eef;
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background: #ddd;
+    }
+
+    .add-food {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calorie Count Calculator</h1>
+
+    <label>Food Name:</label>
+    <input type="text" id="foodName" placeholder="e.g., Banana">
+
+    <label>Calories:</label>
+    <input type="number" id="calories" placeholder="e.g., 105">
+
+    <label>Protein (g):</label>
+    <input type="number" id="protein" placeholder="e.g., 1.3">
+
+    <label>Vitamins (% DV):</label>
+    <input type="number" id="vitamins" placeholder="e.g., 10">
+
+    <button class="add-food" onclick="addFood()">Add Food</button>
+
+    <div class="result" id="result">
+      <h2>Total Nutritional Summary:</h2>
+      <table>
+        <tr><th>Total Calories</th><td id="totalCalories">0</td></tr>
+        <tr><th>Total Protein (g)</th><td id="totalProtein">0</td></tr>
+        <tr><thTotal Vitamins (% DV)</th><td id="totalVitamins">0</td></tr>
+      </table>
+    </div>
+
+    <div class="result">
+      <h3>Items Added:</h3>
+      <ul id="foodList"></ul>
+    </div>
+  </div>
+
+  <script>
+    let totalCalories = 0;
+    let totalProtein = 0;
+    let totalVitamins = 0;
+
+    function addFood() {
+      const name = document.getElementById('foodName').value;
+      const calories = parseFloat(document.getElementById('calories').value);
+      const protein = parseFloat(document.getElementById('protein').value);
+      const vitamins = parseFloat(document.getElementById('vitamins').value);
+
+      if (!name || isNaN(calories) || isNaN(protein) || isNaN(vitamins)) {
+        alert("Please fill all fields correctly.");
+        return;
+      }
+
+      totalCalories += calories;
+      totalProtein += protein;
+      totalVitamins += vitamins;
+
+      document.getElementById('totalCalories').innerText = totalCalories.toFixed(2);
+      document.getElementById('totalProtein').innerText = totalProtein.toFixed(2);
+      document.getElementById('totalVitamins').innerText = totalVitamins.toFixed(2) + "%";
+
+      const foodList = document.getElementById('foodList');
+      const item = document.createElement('li');
+      item.innerText = `${name} - ${calories} cal, ${protein}g protein, ${vitamins}% vitamins`;
+      foodList.appendChild(item);
+
+      // Clear inputs
+      document.getElementById('foodName').value = "";
+      document.getElementById('calories').value = "";
+      document.getElementById('protein').value = "";
+      document.getElementById('vitamins').value = "";
+    }
+  </script>
+</body>
+</html>
